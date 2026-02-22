@@ -1,0 +1,82 @@
+[
+  {
+    "chargeback_id": "CB20001",
+    "merchant_id": "M200",
+    "transaction_id": "T20005",
+    "reason_code": "4837",
+    "amount": 9400.0,
+    "currency": "INR",
+    "received_date": "2026-02-09T10:30:00+05:30",
+    "status": "open"
+  },
+  {
+    "chargeback_id": "CB20002",
+    "merchant_id": "M200",
+    "transaction_id": "T20008",
+    "reason_code": "4841",
+    "amount": 7600.0,
+    "currency": "INR",
+    "received_date": "2026-02-12T10:30:00+05:30",
+    "status": "open"
+  },
+  {
+    "chargeback_id": "CB20003",
+    "merchant_id": "M200",
+    "transaction_id": "T20010",
+    "reason_code": "4855",
+    "amount": 12100.0,
+    "currency": "INR",
+    "received_date": "2026-02-15T10:30:00+05:30",
+    "status": "won"
+  },
+  {
+    "chargeback_id": "CB30001",
+    "merchant_id": "M300",
+    "transaction_id": "T30003",
+    "reason_code": "4837",
+    "amount": 1450.0,
+    "currency": "SGD",
+    "received_date": "2026-02-01T10:30:00+05:30",
+    "status": "open"
+  },
+  {
+    "chargeback_id": "CB30002",
+    "merchant_id": "M300",
+    "transaction_id": "T30006",
+    "reason_code": "4863",
+    "amount": 980.0,
+    "currency": "SGD",
+    "received_date": "2026-02-04T10:30:00+05:30",
+    "status": "lost"
+  },
+  {
+    "chargeback_id": "CB30003",
+    "merchant_id": "M300",
+    "transaction_id": "T30009",
+    "reason_code": "4841",
+    "amount": 2100.0,
+    "currency": "SGD",
+    "received_date": "2026-02-07T10:30:00+05:30",
+    "status": "open"
+  },
+  {
+    "chargeback_id": "CB50001",
+    "merchant_id": "M500",
+    "transaction_id": "T50006",
+    "reason_code": "4837",
+    "amount": 3200.0,
+    "currency": "USD",
+    "received_date": "2026-02-10T10:30:00+05:30",
+    "status": "open"
+  },
+  {
+    "chargeback_id": "CB50002",
+    "merchant_id": "M500",
+    "transaction_id": "T50010",
+    "reason_code": "4863",
+    "amount": 1100.0,
+    "currency": "USD",
+    "received_date": "2026-02-14T10:30:00+05:30",
+    "status": "open"
+  }
+]

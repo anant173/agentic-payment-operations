@@ -1,0 +1,107 @@
+[
+  {
+    "merchant_id": "M100",
+    "merchant_name": "KiranaKart",
+    "mcc": "5411",
+    "region": "IN",
+    "avg_ticket_size": 650.0,
+    "monthly_volume": 8500000.0,
+    "chargeback_ratio": 0.003,
+    "monitoring_program_status": "None",
+    "risk_segment": "Low",
+    "onboarding_date": "2024-06-18",
+    "processor": "AcquirerA",
+    "integration": {
+      "three_ds_enabled": true,
+      "tokenization_enabled": true
+    },
+    "primary_contact": {
+      "name": "A. Shah",
+      "email": "ops@kiranakart.example"
+    }
+  },
+  {
+    "merchant_id": "M200",
+    "merchant_name": "TravelNow",
+    "mcc": "4722",
+    "region": "IN",
+    "avg_ticket_size": 8200.0,
+    "monthly_volume": 42000000.0,
+    "chargeback_ratio": 0.017,
+    "monitoring_program_status": "EarlyWarning",
+    "risk_segment": "Medium",
+    "onboarding_date": "2023-11-02",
+    "processor": "AcquirerB",
+    "integration": {
+      "three_ds_enabled": true,
+      "tokenization_enabled": false
+    },
+    "primary_contact": {
+      "name": "R. Mehta",
+      "email": "payments@travelnow.example"
+    }
+  },
+  {
+    "merchant_id": "M300",
+    "merchant_name": "GameTopUp",
+    "mcc": "5816",
+    "region": "SG",
+    "avg_ticket_size": 1200.0,
+    "monthly_volume": 15000000.0,
+    "chargeback_ratio": 0.022,
+    "monitoring_program_status": "Monitoring",
+    "risk_segment": "High",
+    "onboarding_date": "2025-01-10",
+    "processor": "AcquirerC",
+    "integration": {
+      "three_ds_enabled": false,
+      "tokenization_enabled": true
+    },
+    "primary_contact": {
+      "name": "L. Tan",
+      "email": "support@gametopup.example"
+    }
+  },
+  {
+    "merchant_id": "M400",
+    "merchant_name": "ElectroHub",
+    "mcc": "5732",
+    "region": "IN",
+    "avg_ticket_size": 5400.0,
+    "monthly_volume": 32000000.0,
+    "chargeback_ratio": 0.006,
+    "monitoring_program_status": "None",
+    "risk_segment": "Low",
+    "onboarding_date": "2022-08-27",
+    "processor": "AcquirerA",
+    "integration": {
+      "three_ds_enabled": true,
+      "tokenization_enabled": true
+    },
+    "primary_contact": {
+      "name": "S. Nair",
+      "email": "ops@electrohub.example"
+    }
+  },
+  {
+    "merchant_id": "M500",
+    "merchant_name": "DigitalKeys",
+    "mcc": "5815",
+    "region": "US",
+    "avg_ticket_size": 2100.0,
+    "monthly_volume": 18000000.0,
+    "chargeback_ratio": 0.012,
+    "monitoring_program_status": "None",
+    "risk_segment": "High",
+    "onboarding_date": "2025-06-05",
+    "processor": "AcquirerD",
+    "integration": {
+      "three_ds_enabled": false,
+      "tokenization_enabled": false
+    },
+    "primary_contact": {
+      "name": "J. Reed",
+      "email": "risk@digitalkeys.example"
+    }
+  }
+]

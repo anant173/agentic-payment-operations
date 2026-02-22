@@ -1,0 +1,5 @@
+.venv
+.env
+.git
+.dev-files
+.DS_STORE

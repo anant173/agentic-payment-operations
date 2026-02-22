@@ -1,0 +1,126 @@
+{
+  "version": "2026-02-21-demo",
+  "monitoring_program": {
+    "metric": "chargeback_ratio",
+    "early_warning_threshold": 0.009,
+    "approaching_threshold": 0.018,
+    "monitoring_threshold": 0.02,
+    "notes": [
+      "Demo-only thresholds; do not represent any real network program.",
+      "Use internal KB as source-of-truth for this training."
+    ]
+  },
+  "fraud_risk_bands": {
+    "low": {
+      "max_exclusive": 0.5,
+      "label": "Low"
+    },
+    "medium": {
+      "min_inclusive": 0.5,
+      "max_exclusive": 0.8,
+      "label": "Medium"
+    },
+    "high": {
+      "min_inclusive": 0.8,
+      "label": "High"
+    }
+  },
+  "decline_code_guidance": {
+    "05": {
+      "label": "Do Not Honor",
+      "general_guidance": [
+        "Issuer declined; ask customer to contact issuer.",
+        "Retry may succeed after issuer confirmation."
+      ]
+    },
+    "51": {
+      "label": "Insufficient Funds",
+      "general_guidance": [
+        "Suggest alternate payment method.",
+        "Retry later."
+      ]
+    },
+    "57": {
+      "label": "Transaction Not Permitted",
+      "general_guidance": [
+        "May indicate issuer restrictions or merchant category limits.",
+        "Consider step-up auth or alternate channel."
+      ]
+    },
+    "91": {
+      "label": "Issuer or switch inoperative",
+      "general_guidance": [
+        "Potential temporary issuer/network issue.",
+        "Retry after a short interval; monitor for spikes."
+      ]
+    }
+  },
+  "kb_snippets": [
+    {
+      "id": "KB-DECLINE-SPIKE-DO-NOT-HONOR",
+      "title": "Handling a sudden spike in decline code 05 (Do Not Honor)",
+      "tags": [
+        "decline_spike",
+        "05",
+        "issuer",
+        "routing"
+      ],
+      "content": [
+        "Confirm whether declines are concentrated to specific issuers/countries.",
+        "Check acquirer routing changes, BIN routing, and recent config deployments.",
+        "If spike coincides with a time window, escalate to payments-ops channel with evidence."
+      ]
+    },
+    {
+      "id": "KB-3DS-STEPUP",
+      "title": "Step-up authentication recommendations",
+      "tags": [
+        "3ds",
+        "risk",
+        "step_up"
+      ],
+      "content": [
+        "If risk band is High and 3DS is not enabled or failing frequently, recommend enabling 3DS or improving challenge flow.",
+        "Consider velocity checks and device fingerprinting for high-risk digital goods."
+      ]
+    },
+    {
+      "id": "KB-CHARGEBACK-REMEDIATION",
+      "title": "Chargeback remediation playbook",
+      "tags": [
+        "chargeback",
+        "monitoring",
+        "remediation"
+      ],
+      "content": [
+        "Reduce fraud via stronger auth and screening.",
+        "Improve descriptor and customer support responsiveness.",
+        "Review refund policy and improve cancellation flows for travel merchants."
+      ]
+    }
+  ],
+  "pci_hygiene": {
+    "never_request": [
+      "full PAN",
+      "CVV",
+      "PIN",
+      "full cardholder name + address"
+    ],
+    "masking": {
+      "pan": "************1234",
+      "token": "tok_******"
+    }
+  },
+  "escalation": {
+    "slack_channels": {
+      "payments_ops": "#payments-ops-demo",
+      "risk_approvals": "#risk-approvals-demo"
+    },
+    "when_to_escalate": [
+      "Conflicting system-of-record signals (status mismatch).",
+      "Large-scale decline spikes (>20% decline rate in last 6 hours).",
+      "High risk band + repeated approvals without step-up auth for high-risk segment merchants.",
+      "Approaching or exceeding monitoring thresholds."
+    ]
+  }
+}

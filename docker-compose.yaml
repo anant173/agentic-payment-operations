@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # 1. FastAPI Agent Backend Service
+  fastapi-agent:
+    # Tell Compose to build the image using the Dockerfile in the current directory
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+
+    # Map container port 8000 to host port 8000 (access via http://localhost:8000)
+    ports:
+      - "8000:8000"
+
+    # Set environment variable for Streamlit to use
+    environment:
+      # This is the internal network hostname/port for the Streamlit app to call
+      # The service name "fastapi-agent" resolves to the container's internal IP.
+      AGENT_API_URL: http://fastapi-agent:8000
+
+    # Name the container explicitly for easy logging
+    container_name: mastercard_fastapi_agent
+
+    # Mount the current code directory into the container.
+    # This is often used for development to allow the --reload flag to work
+    # (though --reload is not recommended for production).
+    volumes:
+      - .:/app
+
+    # Ensure the Streamlit frontend waits until the backend is running
+    # (though Streamlit will retry connections anyway)
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health-check"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # 2. Streamlit Frontend Service
+  streamlit-app:
+    # Tell Compose to build the image using the dedicated Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile.streamlit
+
+    # Map container port 8000 to host port 8501 (access via http://localhost:8501)
+    ports:
+      - "8501:8000" # Streamlit's internal CMD uses port 8000; we expose it on 8501
+
+    # Mount the current code directory
+    volumes:
+      - .:/app
+
+    # Ensure the Streamlit app waits until the FastAPI agent reports as healthy
+    depends_on:
+      fastapi-agent:
+        condition: service_healthy
+
+    container_name: mastercard_streamlit_app
+
+# Define a network (Compose creates this by default, but it's good practice to define)
+networks:
+  default:
+    driver: bridge

@@ -1,0 +1,299 @@
+{
+  "tools": [
+    {
+      "name": "list_transactions",
+      "description": "List recent transactions for a merchant over a time range, with optional status/decline_code filters.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "merchant_id": {
+            "type": "string"
+          },
+          "start_time": {
+            "type": "string",
+            "description": "ISO datetime"
+          },
+          "end_time": {
+            "type": "string",
+            "description": "ISO datetime"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "approved",
+              "declined"
+            ],
+            "nullable": true
+          },
+          "decline_code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "merchant_id",
+          "start_time",
+          "end_time"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "merchant_id": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "merchant_id",
+          "count",
+          "transactions"
+        ]
+      }
+    },
+    {
+      "name": "analyze_transaction",
+      "description": "Fetch transaction details and provide deterministic risk band and guidance.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "transaction_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "transaction_id"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "transaction": {
+            "type": "object"
+          },
+          "risk_band": {
+            "type": "string",
+            "enum": [
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "signals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "next_actions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "transaction",
+          "risk_band",
+          "signals",
+          "next_actions"
+        ]
+      }
+    },
+    {
+      "name": "check_merchant_compliance",
+      "description": "Evaluate merchant chargeback_ratio against demo thresholds and return a verdict.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "merchant_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "merchant_id"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "merchant_id": {
+            "type": "string"
+          },
+          "chargeback_ratio": {
+            "type": "number"
+          },
+          "thresholds": {
+            "type": "object"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "Healthy",
+              "EarlyWarning",
+              "Approaching",
+              "Monitoring"
+            ]
+          },
+          "recommendations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "merchant_id",
+          "chargeback_ratio",
+          "thresholds",
+          "verdict",
+          "recommendations"
+        ]
+      }
+    },
+    {
+      "name": "lookup_internal_policy",
+      "description": "Retrieve internal policy/runbook snippets based on a query and optional context (region/mcc).",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "context": {
+            "type": "object",
+            "nullable": true
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "results",
+          "source"
+        ]
+      }
+    },
+    {
+      "name": "web_search",
+      "description": "Search the public web for general/industry context. Must not be used as source-of-truth for internal thresholds or policies.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "results"
+        ]
+      }
+    },
+    {
+      "name": "slack_search_messages",
+      "description": "Search Slack messages in a channel for relevant incidents/runbooks.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "query": {
+            "type": "string"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "channel",
+          "query"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "required": [
+          "matches"
+        ]
+      }
+    },
+    {
+      "name": "slack_post_message",
+      "description": "Post a message to Slack (escalation/approval). Must not include sensitive card data.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "channel",
+          "text"
+        ]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "ts": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "ok",
+          "ts"
+        ]
+      }
+    }
+  ]
+}
