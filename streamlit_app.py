@@ -9,10 +9,6 @@ import httpx
 
 # --- Configuration ---
 load_dotenv()
-
-# Import the run_agent function from the project structure
-from src.agent.graph import run_agent
-
 # Keep as-is
 API_URL = os.getenv("AGENT_API_URL")
 
