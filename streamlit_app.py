@@ -10,6 +10,9 @@ import httpx
 # --- Configuration ---
 load_dotenv()
 
+# Import the run_agent function from the project structure
+from src.agent.graph import run_agent
+
 # Keep as-is
 API_URL = os.getenv("AGENT_API_URL")
 
@@ -42,16 +45,17 @@ def initialize_session_state():
             {
                 "role": "assistant",
                 "content": (
-                    "Hello — I’m the Payment Operations Specialist & Network Compliance Advisor (Demo). "
-                    "I investigate transactions, evaluate fraud and monitoring signals, "
-                    "retrieve internal playbooks, and escalate to Slack when required. "
-                    "How can I assist?"
+                    "Hello — I’m the Mastercard Payment Operations Specialist and Network Compliance Advisor (demo). "
+                    "I can investigate transactions, assess risk/compliance signals, pull internal playbooks, "
+                    "and escalate to Slack when required. How can I help?"
                 ),
             }
         ]
 
 
 async def process_input(user_input: str):
+    """Handles user input, calls the async agent, and updates the chat UI."""
+    # Add user message to the chat history
     st.session_state.messages.append({"role": "user", "content": user_input})
 
     with st.chat_message("assistant"):
@@ -97,7 +101,7 @@ async def process_input(user_input: str):
 initialize_session_state()
 
 st.set_page_config(page_title="Mastercard Payment Ops Agent (Demo)")
-st.title("💳 Mastercard Payment Ops Agent (Demo)")
+st.title("Mastercard Payment Ops Agent (Demo)")
 
 with st.sidebar:
     st.header("Demo Scenarios")
