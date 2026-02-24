@@ -1,6 +1,7 @@
+**/configs-demo/
 __pycache__
 .venv
 .env
 .git
-.dev-files
+**/dev-files/
 .DS_STORE
